@@ -9,10 +9,7 @@ import { QueryMenu } from "./dto/query-menu.dto";
 
 @Injectable()
 export class MenusService {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly jwtService: JwtService
-  ) {}
+  constructor(private readonly prisma: PrismaService, private readonly jwtService: JwtService) {}
 
   async getAllMenus(
     query?: string
@@ -66,10 +63,37 @@ export class MenusService {
     };
   }
 
-  async createMenu(
-    createMenuDto: CreateMenuDto,
-    request: Request
-  ): Promise<MenuEntity> {
+  async getDetialMenus(id: number): Promise<any> {
+    const itemsOne = await this.prisma.menu.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        category: {
+          select: {
+            name: true,
+          },
+        },
+        ratings: {
+          select: {
+            rating: true,
+          },
+        },
+        menuImages: {
+          select: {
+            img1: true,
+            img2: true,
+            img3: true,
+            img4: true,
+          },
+        },
+      },
+    });
+    console.log(itemsOne);
+    return itemsOne;
+  }
+
+  async createMenu(createMenuDto: CreateMenuDto, request: Request): Promise<MenuEntity> {
     const { name, price, categoryId, calories, description } = createMenuDto;
     const token = request.headers["authorization"]?.split(" ")[1];
     if (!token) {
