@@ -39,16 +39,16 @@ export class MenuController {
   @ApiQuery({ name: "limit", required: false })
   @ApiOkResponse({ type: [QueryMenu], description: "A list of menus" })
   async getAllMenus(
-    @Query("q") query?: string,
-    @Query("page") page = "1",
-    @Query("limit") limit = "10"
+    @Query("q") query?: string
+    //@Query("page") page = "1",
+    //@Query("limit") limit = "10"
   ): Promise<{
     menus: QueryMenu[];
-    total: number;
-    page: number;
-    limit: number;
+    //total: number;
+    //page: number;
+    //limit: number;
   }> {
-    return this.menusService.getAllMenus(query, Number(page), Number(limit));
+    return this.menusService.getAllMenus(query); //Number(page), Number(limit)//);
   }
 
   @Post()
