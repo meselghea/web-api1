@@ -15,22 +15,22 @@ export class MenusService {
   ) {}
 
   async getAllMenus(
-    query?: string,
-    page = 1,
-    limit = 10
+    query?: string
+    //page = 1,
+    //limit = 10
   ): Promise<{
     menus: QueryMenu[];
-    total: number;
-    page: number;
-    limit: number;
+    //total: number;
+    //page: number;
+    //limit: number;
   }> {
-    const skip = (page - 1) * limit;
+    //const skip = (page - 1) * limit;
     const menus = await this.prisma.menu.findMany({
       where: {
         name: { contains: query || "" },
       },
-      skip: skip,
-      take: limit,
+      //skip: skip,
+      //take: limit,
       include: {
         category: {
           select: {
@@ -52,17 +52,17 @@ export class MenusService {
         },
       },
     });
-    const total = await this.prisma.menu.count({
-      where: {
-        name: { contains: query || "" },
-      },
-    });
+    // const total = await this.prisma.menu.count({
+    // where: {
+    // name: { contains: query || "" },
+    //},
+    //});
 
     return {
       menus,
-      total,
-      page,
-      limit,
+      //total,
+      //page,
+      //limit,
     };
   }
 
