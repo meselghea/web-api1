@@ -1,33 +1,33 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { Request } from 'express';
-import { PrismaService } from '../prisma/prisma.service';
-import { CreateMenuDto } from './dto/create-menu.dto';
-import { UpdateMenuDto } from './dto/update-menu.dto';
-import { MenuEntity } from './entities/menu.entity';
-import { JwtService } from '@nestjs/jwt';
-import { QueryMenu } from './dto/query-menu.dto';
+import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { Request } from "express";
+import { PrismaService } from "../prisma/prisma.service";
+import { CreateMenuDto } from "./dto/create-menu.dto";
+import { UpdateMenuDto } from "./dto/update-menu.dto";
+import { MenuEntity } from "./entities/menu.entity";
+import { JwtService } from "@nestjs/jwt";
+import { QueryMenu } from "./dto/query-menu.dto";
 
 @Injectable()
 export class MenusService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly jwtService: JwtService,
+    private readonly jwtService: JwtService
   ) {}
 
   async getAllMenus(
     query?: string,
     page = 1,
-    limit = 10,
+    limit = 10
   ): Promise<{
-    items: QueryMenu[];
+    menus: QueryMenu[];
     total: number;
     page: number;
     limit: number;
   }> {
     const skip = (page - 1) * limit;
-    const items = await this.prisma.menu.findMany({
+    const menus = await this.prisma.menu.findMany({
       where: {
-        name: { contains: query || '' },
+        name: { contains: query || "" },
       },
       skip: skip,
       take: limit,
@@ -54,12 +54,12 @@ export class MenusService {
     });
     const total = await this.prisma.menu.count({
       where: {
-        name: { contains: query || '' },
+        name: { contains: query || "" },
       },
     });
 
     return {
-      items,
+      menus,
       total,
       page,
       limit,
@@ -68,12 +68,12 @@ export class MenusService {
 
   async createMenu(
     createMenuDto: CreateMenuDto,
-    request: Request,
+    request: Request
   ): Promise<MenuEntity> {
     const { name, price, categoryId, calories, description } = createMenuDto;
-    const token = request.headers['authorization']?.split(' ')[1];
+    const token = request.headers["authorization"]?.split(" ")[1];
     if (!token) {
-      throw new UnauthorizedException('Invalid token.');
+      throw new UnauthorizedException("Invalid token.");
     }
     const decodedToken = this.jwtService.decode(token) as { sub: number };
     const userId = decodedToken.sub;
