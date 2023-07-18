@@ -3,8 +3,8 @@ import {
   MinLength,
   MaxLength,
   IsNumber,
-} from '@nestjs/class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+} from "@nestjs/class-validator";
+import { ApiProperty } from "@nestjs/swagger";
 
 export class UpdateMenuDto {
   @IsString()

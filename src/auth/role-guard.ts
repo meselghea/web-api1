@@ -3,15 +3,15 @@ import {
   CanActivate,
   ExecutionContext,
   ForbiddenException,
-} from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { Role } from '@prisma/client';
+} from "@nestjs/common";
+import { Reflector } from "@nestjs/core";
+import { Role } from "@prisma/client";
 
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
   canActivate(context: ExecutionContext): boolean {
-    const requiredRoles = this.reflector.getAllAndOverride<Role[]>('roles', [
+    const requiredRoles = this.reflector.getAllAndOverride<Role[]>("roles", [
       context.getHandler(),
       context.getClass(),
     ]);
@@ -28,12 +28,12 @@ export class RolesGuard implements CanActivate {
 
     // Check if the user has the necessary role for the route
     const hasRequiredRole = requiredRoles.some(
-      (requiredRole) => user.role === requiredRole,
+      (requiredRole) => user.role === requiredRole
     );
 
     if (!hasRequiredRole) {
       throw new ForbiddenException(
-        'You do not have permission to access this resource.',
+        "You do not have permission to access this resource."
       ); // User does not have the required role
     }
 

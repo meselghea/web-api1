@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { OrderItem } from './order-item.dto';
+import { ApiProperty } from "@nestjs/swagger";
+import { OrderItem } from "./order-item.dto";
 
 export class UpdateOrderDto {
   //   id: string;

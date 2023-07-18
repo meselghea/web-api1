@@ -1,4 +1,15 @@
-import { Controller, Get, Param, Post, Patch, Delete, Req, Body, Query, UseGuards } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Patch,
+  Delete,
+  Req,
+  Body,
+  Query,
+  UseGuards,
+} from "@nestjs/common";
 import { Request } from "express";
 import { MenusService } from "./menus.service";
 import { CreateMenuDto } from "./dto/create-menu.dto";
@@ -7,7 +18,13 @@ import { Roles } from "../auth/roles.decorator";
 import { RolesGuard } from "../auth/role-guard";
 import { Role, Menu } from "@prisma/client";
 import { MenuEntity } from "./entities/menu.entity";
-import { ApiTags, ApiOkResponse, ApiQuery, ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
+import {
+  ApiTags,
+  ApiOkResponse,
+  ApiQuery,
+  ApiBearerAuth,
+  ApiResponse,
+} from "@nestjs/swagger";
 import { AuthGuard } from "@nestjs/passport";
 import { QueryMenu } from "./dto/query-menu.dto";
 
@@ -53,7 +70,10 @@ export class MenuController {
     description: "menu created successfully",
     type: MenuEntity,
   })
-  createMenu(@Body() createMenuDto: CreateMenuDto, @Req() request: Request): Promise<MenuEntity> {
+  createMenu(
+    @Body() createMenuDto: CreateMenuDto,
+    @Req() request: Request
+  ): Promise<MenuEntity> {
     return this.menusService.createMenu(createMenuDto, request);
   }
 
@@ -66,7 +86,10 @@ export class MenuController {
     description: "Menu updated successfully",
     type: MenuEntity,
   })
-  updateMenu(@Param("id") id: number, @Body() updateMenuDto: UpdateMenuDto): Promise<MenuEntity> {
+  updateMenu(
+    @Param("id") id: number,
+    @Body() updateMenuDto: UpdateMenuDto
+  ): Promise<MenuEntity> {
     return this.menusService.updateMenu(+id, updateMenuDto);
   }
 

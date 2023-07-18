@@ -1,10 +1,10 @@
-import { config } from 'dotenv';
+import { config } from "dotenv";
 
 config();
 
 export const ENVIRONMENT = process.env.NODE_ENV;
 export const PORT = process.env.PORT || 4000;
-export const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || 'defaultSecretKey';
+export const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || "defaultSecretKey";
 export const JWT_EXPIRATION_TIME = process.env.JWT_EXPIRATION_TIME;
 export const EMAIL_ADDRESS = process.env.EMAIL_ADDRESS;
 export const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD;

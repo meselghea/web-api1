@@ -2,22 +2,22 @@ import {
   Injectable,
   UnauthorizedException,
   NotFoundException,
-} from '@nestjs/common';
-import { UsersService } from '../users/users.service';
-import { JwtService } from '@nestjs/jwt';
-import { UserLoginDto } from './dto/user-login.dto';
-import { UserRegisterDto } from './dto/user-register.dto';
-import { ForgotPasswordDto } from '../auth/dto/forgot-password.dto';
-import { ResetPasswordDto } from '../auth/dto/reset-password.dto';
-import { User, Role } from '@prisma/client';
-import { MailService } from '../mail/mail.service';
+} from "@nestjs/common";
+import { UsersService } from "../users/users.service";
+import { JwtService } from "@nestjs/jwt";
+import { UserLoginDto } from "./dto/user-login.dto";
+import { UserRegisterDto } from "./dto/user-register.dto";
+import { ForgotPasswordDto } from "../auth/dto/forgot-password.dto";
+import { ResetPasswordDto } from "../auth/dto/reset-password.dto";
+import { User, Role } from "@prisma/client";
+import { MailService } from "../mail/mail.service";
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-    private mailService: MailService,
+    private mailService: MailService
   ) {}
 
   async register(userRegisterDto: UserRegisterDto) {
@@ -32,7 +32,7 @@ export class AuthService {
       throw new UnauthorizedException();
     }
     if (user.role !== Role.ADMIN && user.role !== Role.CUSTOMER) {
-      throw new UnauthorizedException('Invalid role');
+      throw new UnauthorizedException("Invalid role");
     }
 
     return this.generateJWT(user);
@@ -47,18 +47,18 @@ export class AuthService {
 
     const token = this.jwtService.sign(
       { userId: user.id },
-      { expiresIn: '1h' },
+      { expiresIn: "1h" }
     );
     const resetLink = `http://warteg.com/reset-password?token=${token}`;
 
     await this.mailService.sendMail(
       email,
-      'Reset your password',
-      `Click this link to reset your password: ${resetLink}`,
+      "Reset your password",
+      `Click this link to reset your password: ${resetLink}`
     );
 
     return {
-      message: 'A link to reset your password has been sent to your email.',
+      message: "A link to reset your password has been sent to your email.",
     };
   }
 
@@ -68,7 +68,7 @@ export class AuthService {
     try {
       decodedToken = this.jwtService.verify(token);
     } catch (error) {
-      throw new UnauthorizedException('Invalid token');
+      throw new UnauthorizedException("Invalid token");
     }
 
     const user = await this.usersService.findById(decodedToken.userId);
@@ -78,7 +78,7 @@ export class AuthService {
 
     await this.usersService.updatePassword(user.id, newPassword);
 
-    return { message: 'Your password has been reset successfully.' };
+    return { message: "Your password has been reset successfully." };
   }
 
   private generateJWT(user: User) {
