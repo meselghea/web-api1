@@ -2,33 +2,33 @@ import {
   Injectable,
   NotFoundException,
   UnauthorizedException,
-} from '@nestjs/common';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
-import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { Role, Order } from '@prisma/client';
-import { JwtService } from '@nestjs/jwt';
-import { OrderEntity } from './entities/order.entity';
-import { Request } from 'express';
-import { OrderItem } from './dto/order-item.dto';
+} from "@nestjs/common";
+import { CreateOrderDto } from "./dto/create-order.dto";
+import { UpdateOrderDto } from "./dto/update-order.dto";
+import { UpdateOrderStatusDto } from "./dto/update-order-status.dto";
+import { PrismaService } from "src/prisma/prisma.service";
+import { Role, Order } from "@prisma/client";
+import { JwtService } from "@nestjs/jwt";
+import { OrderEntity } from "./entities/order.entity";
+import { Request } from "express";
+import { OrderItem } from "./dto/order-item.dto";
 
 @Injectable()
 export class OrdersService {
   constructor(
     private prismaService: PrismaService,
-    private jwtService: JwtService,
+    private jwtService: JwtService
   ) {}
 
   async createOrder(
     createOrderDto: CreateOrderDto,
-    request: Request,
+    request: Request
   ): Promise<OrderEntity> {
     const { orderItems } = createOrderDto;
 
-    const token = request.headers['authorization']?.split(' ')[1];
+    const token = request.headers["authorization"]?.split(" ")[1];
     if (!token) {
-      throw new UnauthorizedException('Invalid token.');
+      throw new UnauthorizedException("Invalid token.");
     }
     const decodedToken = this.jwtService.decode(token) as {
       sub: number;
@@ -70,7 +70,7 @@ export class OrdersService {
   }
 
   createOrderItemsData(
-    orderItems: OrderItem[],
+    orderItems: OrderItem[]
   ): { menuId: number; quantity: number }[] {
     return orderItems.map((orderItem) => ({
       menuId: orderItem.menuId,
@@ -125,7 +125,7 @@ export class OrdersService {
     });
 
     if (!order) {
-      throw new NotFoundException('Order not found.');
+      throw new NotFoundException("Order not found.");
     }
     await this.prismaService.orderItem.deleteMany({
       where: { orderId: id },
@@ -165,7 +165,7 @@ export class OrdersService {
     });
 
     if (!orderItem) {
-      throw new NotFoundException('Order item not found.');
+      throw new NotFoundException("Order item not found.");
     }
 
     const order = await this.prismaService.order.findUnique({
@@ -174,7 +174,7 @@ export class OrdersService {
     });
 
     if (!order) {
-      throw new NotFoundException('Order not found.');
+      throw new NotFoundException("Order not found.");
     }
     await this.prismaService.orderItem.delete({
       where: { id: orderItemId },
@@ -184,14 +184,14 @@ export class OrdersService {
   async updateOrderStatus(
     id: string,
     updateOrderStatusDto: UpdateOrderStatusDto,
-    userRole: Role,
+    userRole: Role
   ): Promise<Order> {
     if (userRole !== Role.ADMIN) {
-      throw new UnauthorizedException('Only admins can update order status.');
+      throw new UnauthorizedException("Only admins can update order status.");
     }
     const order = await this.prismaService.order.findUnique({ where: { id } });
     if (!order) {
-      throw new NotFoundException('Order not found.');
+      throw new NotFoundException("Order not found.");
     }
     return this.prismaService.order.update({
       where: { id },

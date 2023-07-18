@@ -9,7 +9,10 @@ import { QueryMenu } from "./dto/query-menu.dto";
 
 @Injectable()
 export class MenusService {
-  constructor(private readonly prisma: PrismaService, private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly jwtService: JwtService
+  ) {}
 
   async getAllMenus(
     query?: string
@@ -93,7 +96,10 @@ export class MenusService {
     return itemsOne;
   }
 
-  async createMenu(createMenuDto: CreateMenuDto, request: Request): Promise<MenuEntity> {
+  async createMenu(
+    createMenuDto: CreateMenuDto,
+    request: Request
+  ): Promise<MenuEntity> {
     const { name, price, categoryId, calories, description } = createMenuDto;
     const token = request.headers["authorization"]?.split(" ")[1];
     if (!token) {

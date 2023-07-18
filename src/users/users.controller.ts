@@ -6,33 +6,33 @@ import {
   Param,
   Patch,
   UseGuards,
-} from '@nestjs/common';
-import { UsersService } from './users.service';
+} from "@nestjs/common";
+import { UsersService } from "./users.service";
 import {
   ApiBearerAuth,
   ApiOperation,
   ApiResponse,
   ApiTags,
-} from '@nestjs/swagger';
-import { Roles } from 'src/auth/roles.decorator';
-import { RolesGuard } from 'src/auth/role-guard';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { Role } from '@prisma/client';
-import { AuthGuard } from '@nestjs/passport';
-import { UserEntity } from './entities/user.entity';
+} from "@nestjs/swagger";
+import { Roles } from "src/auth/roles.decorator";
+import { RolesGuard } from "src/auth/role-guard";
+import { UpdateUserDto } from "./dto/update-user.dto";
+import { Role } from "@prisma/client";
+import { AuthGuard } from "@nestjs/passport";
+import { UserEntity } from "./entities/user.entity";
 
-@Controller('users')
+@Controller("users")
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @ApiTags('Users')
+  @ApiTags("Users")
   @Roles(Role.ADMIN)
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @ApiOperation({ summary: 'View all Users (Admin) ' })
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @ApiOperation({ summary: "View all Users (Admin) " })
   @ApiBearerAuth()
   @ApiResponse({
     status: 200,
-    description: 'View All Users successfully',
+    description: "View All Users successfully",
     type: UserEntity,
   })
   @Get()
@@ -40,48 +40,48 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @ApiTags('Users')
+  @ApiTags("Users")
   @Roles(Role.ADMIN, Role.CUSTOMER)
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @ApiOperation({ summary: 'View User (Admin / Cutomer) ' })
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @ApiOperation({ summary: "View User (Admin / Cutomer) " })
   @ApiBearerAuth()
   @ApiResponse({
     status: 200,
-    description: 'View User successfully',
+    description: "View User successfully",
     type: UserEntity,
   })
-  @Get(':id')
-  findOnebyUser(@Param('id') id: string) {
+  @Get(":id")
+  findOnebyUser(@Param("id") id: string) {
     return this.usersService.findOnebyUser(+id);
   }
 
-  @ApiTags('Users')
+  @ApiTags("Users")
   @Roles(Role.ADMIN, Role.CUSTOMER)
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @ApiOperation({ summary: 'Update User (Admin / Customer) ' })
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
+  @ApiOperation({ summary: "Update User (Admin / Customer) " })
   @ApiBearerAuth()
   @ApiResponse({
     status: 201,
-    description: 'Updated User successfully',
+    description: "Updated User successfully",
     type: UserEntity,
   })
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  @Patch(":id")
+  update(@Param("id") id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
   }
 
-  @ApiTags('Users')
+  @ApiTags("Users")
   @Roles(Role.ADMIN)
-  @ApiOperation({ summary: 'Update User (Admin) ' })
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @ApiOperation({ summary: "Update User (Admin) " })
+  @UseGuards(AuthGuard("jwt"), RolesGuard)
   @ApiBearerAuth()
   @ApiResponse({
     status: 200,
-    description: 'Delete User successfully',
+    description: "Delete User successfully",
     type: UserEntity,
   })
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete(":id")
+  remove(@Param("id") id: string) {
     return this.usersService.remove(+id);
   }
 }

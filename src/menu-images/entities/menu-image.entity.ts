@@ -1,9 +1,9 @@
-import { MenuImages } from '@prisma/client';
-import { ApiProperty } from '@nestjs/swagger';
+import { MenuImages } from "@prisma/client";
+import { ApiProperty } from "@nestjs/swagger";
 
 export class MenuImagesEntity implements MenuImages {
   constructor(
-    partial: Partial<MenuImagesEntity> | Partial<MenuImagesEntity[]>,
+    partial: Partial<MenuImagesEntity> | Partial<MenuImagesEntity[]>
   ) {
     Object.assign(this, partial);
   }

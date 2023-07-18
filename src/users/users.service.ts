@@ -1,15 +1,14 @@
 import {
   Injectable,
   NotFoundException,
-  UnauthorizedException,
   BadRequestException,
-} from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { User } from '@prisma/client';
-import { UserRegisterDto } from '../auth/dto/user-register.dto';
-import { UserLoginDto } from '../auth/dto/user-login.dto';
-import * as bcrypt from 'bcryptjs';
-import { UpdateUserDto } from './dto/update-user.dto';
+} from "@nestjs/common";
+import { PrismaService } from "../prisma/prisma.service";
+import { User } from "@prisma/client";
+import { UserRegisterDto } from "../auth/dto/user-register.dto";
+import { UserLoginDto } from "../auth/dto/user-login.dto";
+import * as bcrypt from "bcryptjs";
+import { UpdateUserDto } from "./dto/update-user.dto";
 
 @Injectable()
 export class UsersService {
@@ -21,7 +20,7 @@ export class UsersService {
       where: { username: createUserDto.username },
     });
     if (existingUserWithUsername) {
-      throw new BadRequestException('Username already exists');
+      throw new BadRequestException("Username already exists");
     }
 
     // Check if email already exists
@@ -29,7 +28,7 @@ export class UsersService {
       where: { email: createUserDto.email },
     });
     if (existingUserWithEmail) {
-      throw new BadRequestException('Email already exists');
+      throw new BadRequestException("Email already exists");
     }
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
@@ -138,10 +137,6 @@ export class UsersService {
   }
 
   async remove(id: number) {
-    const user = await this.prisma.user.findUnique({
-      where: { id },
-    });
-
     return this.prisma.user.delete({
       where: { id },
     });

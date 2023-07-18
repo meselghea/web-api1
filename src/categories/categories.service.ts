@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
-import { Category } from '@prisma/client';
-import { CategoryEntity } from './entities/category.entity';
+import { Injectable } from "@nestjs/common";
+import { PrismaService } from "../prisma/prisma.service";
+import { CreateCategoryDto } from "./dto/create-category.dto";
+import { UpdateCategoryDto } from "./dto/update-category.dto";
+import { Category } from "@prisma/client";
+import { CategoryEntity } from "./entities/category.entity";
 
 @Injectable()
 export class CategoryService {
@@ -15,8 +15,8 @@ export class CategoryService {
         OR: [
           {
             name: {
-              contains: query || '',
-              mode: 'insensitive',
+              contains: query || "",
+              mode: "insensitive",
             },
           },
         ],
@@ -29,7 +29,7 @@ export class CategoryService {
   }
 
   async createCategory(
-    createCategoryDto: CreateCategoryDto,
+    createCategoryDto: CreateCategoryDto
   ): Promise<Category> {
     const { name } = createCategoryDto;
 
@@ -41,7 +41,7 @@ export class CategoryService {
 
   async updateCategory(
     id: string,
-    updateCategoryDto: UpdateCategoryDto,
+    updateCategoryDto: UpdateCategoryDto
   ): Promise<Category | null> {
     const { name } = updateCategoryDto;
 
