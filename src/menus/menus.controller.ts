@@ -51,6 +51,16 @@ export class MenuController {
     return this.menusService.getAllMenus(query); //Number(page), Number(limit)//);
   }
 
+  @Get(":id")
+  @ApiResponse({
+    status: 201,
+    description: "Menu detail successfully",
+    type: MenuEntity,
+  })
+  updateMenuUser(@Param("id") id: string): Promise<MenuEntity> {
+    return this.menusService.getDetialMenus(Number(id));
+  }
+
   @Post()
   @Roles(Role.ADMIN)
   @UseGuards(AuthGuard("jwt"), RolesGuard)

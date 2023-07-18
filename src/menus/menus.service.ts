@@ -66,6 +66,36 @@ export class MenusService {
     };
   }
 
+  async getDetialMenus(id: number): Promise<any> {
+    const itemsOne = await this.prisma.menu.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        category: {
+          select: {
+            name: true,
+          },
+        },
+        ratings: {
+          select: {
+            rating: true,
+          },
+        },
+        menuImages: {
+          select: {
+            img1: true,
+            img2: true,
+            img3: true,
+            img4: true,
+          },
+        },
+      },
+    });
+    console.log(itemsOne);
+    return itemsOne;
+  }
+
   async createMenu(
     createMenuDto: CreateMenuDto,
     request: Request

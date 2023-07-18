@@ -1,6 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
-import { OrderItem, OrderStatus } from '@prisma/client';
+import { ApiProperty } from "@nestjs/swagger";
+import { IsString } from "class-validator";
+import { OrderItem, OrderStatus } from "@prisma/client";
 
 export class OrderEntity {
   id: string;

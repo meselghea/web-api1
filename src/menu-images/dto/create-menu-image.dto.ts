@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty } from '@nestjs/class-validator';
+import { ApiProperty } from "@nestjs/swagger";
+import { IsString, IsNotEmpty } from "@nestjs/class-validator";
 export class CreateMenuImagesDto {
   @IsString()
   @IsNotEmpty()

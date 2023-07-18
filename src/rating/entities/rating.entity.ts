@@ -1,5 +1,5 @@
-import { Ratings } from '@prisma/client';
-import { ApiProperty } from '@nestjs/swagger';
+import { Ratings } from "@prisma/client";
+import { ApiProperty } from "@nestjs/swagger";
 
 export class RatingsEntity implements Ratings {
   constructor(partial: Partial<RatingsEntity> | Partial<RatingsEntity[]>) {

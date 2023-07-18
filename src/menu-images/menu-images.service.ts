@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { MenuImages } from '@prisma/client';
-import { CreateMenuImagesDto } from './dto/create-menu-image.dto';
-import { UpdateMenuImageDto } from './dto/update-menu-image.dto';
+import { Injectable } from "@nestjs/common";
+import { PrismaService } from "../prisma/prisma.service";
+import { MenuImages } from "@prisma/client";
+import { CreateMenuImagesDto } from "./dto/create-menu-image.dto";
+import { UpdateMenuImageDto } from "./dto/update-menu-image.dto";
 @Injectable()
 export class MenuImagesService {
   constructor(private readonly prisma: PrismaService) {}
@@ -23,7 +23,7 @@ export class MenuImagesService {
 
   async updateMenuImages(
     menuId: number,
-    data: UpdateMenuImageDto,
+    data: UpdateMenuImageDto
   ): Promise<MenuImages | null> {
     return this.prisma.menuImages.update({
       where: {
