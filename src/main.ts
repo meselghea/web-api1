@@ -8,8 +8,11 @@ import * as cors from "cors";
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  // Tambahkan konfigurasi CORS di sini
-  app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+}));
+
 
   const config = new DocumentBuilder()
     .addBearerAuth()
