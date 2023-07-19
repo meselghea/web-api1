@@ -12,8 +12,7 @@ export class UserRegisterDto {
   password: string;
 
   @ApiProperty({ description: "The role of the user." })
-  @IsNotEmpty()
-  role: "CUSTOMER" | "ADMIN";
+  role: "CUSTOMER" | "ADMIN" = "CUSTOMER";
 
   @ApiProperty({ description: "The address of the user." })
   @IsNotEmpty()
