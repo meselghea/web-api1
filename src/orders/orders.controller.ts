@@ -74,6 +74,15 @@ export class OrdersController {
     return this.ordersService.removeOrders(id);
   }
 
+@Get('user/:userId')
+@UseGuards(AuthGuard('jwt'), RolesGuard)
+@Roles(Role.ADMIN, Role.CUSTOMER)
+@ApiBearerAuth()
+async getOrdersForUser(@Param('userId') userId: string) {
+  return this.ordersService.getOrdersForUser(userId);
+}
+
+  
   @Patch(":id/status")
   @UseGuards(AuthGuard("jwt"), RolesGuard)
   @Roles(Role.ADMIN)
