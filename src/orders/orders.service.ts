@@ -143,6 +143,19 @@ export class OrdersService {
     // });
   }
 
+
+async getOrdersForUser(userId: string) {
+  return await this.prismaService.order.findMany({
+    where: { userId: parseInt(userId) },
+    select: {
+      id: true,
+      amount: true,
+      orderItems: true,
+    },
+  });
+}
+
+  
   async removeOrders(id: string) {
     // return this.prismaService.order.delete({
     //   where: { id },
