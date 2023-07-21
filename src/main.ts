@@ -9,7 +9,12 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   // Tambahkan konfigurasi CORS di sini
-  app.use(cors());
+ app.use(
+    cors({
+      origin: "https://w23-vercel-cub24rt71-anggr.vercel.app/",
+      credentials: true,
+    })
+  );
 
   const config = new DocumentBuilder()
     .addBearerAuth()
