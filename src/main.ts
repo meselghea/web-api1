@@ -11,7 +11,7 @@ async function bootstrap() {
   // Tambahkan konfigurasi CORS di sini
  app.use(
     cors({
-      origin: "https://w23-vercel-cub24rt71-anggr.vercel.app",
+      origin: "https://w23-vercel-cub24rt71-anggr.vercel.app", "https://www.wareg.site",
       credentials: true,
     })
   );
