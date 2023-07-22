@@ -9,7 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
 app.use(cors({
-  origin: 'https://www.wareg.site',
+  origin: 'https://wareg.site/',
   credentials: true,
 }));
 
