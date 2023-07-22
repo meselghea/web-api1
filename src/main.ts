@@ -9,7 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
 app.use(cors({
-  origin: 'https://w23-vercel-cub24rt71-anggr.vercel.app', 'https://www.wareg.site',
+  origin: 'https://www.wareg.site',
   credentials: true,
 }));
 
